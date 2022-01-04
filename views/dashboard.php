@@ -95,14 +95,13 @@ require_once('../partials/head.php');
                     <div class="row">
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="info-box">
-                                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+                                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-home"></i></span>
 
                                 <div class="info-box-content">
-                                    <span class="info-box-text">CPU Traffic</span>
+                                    <span class="info-box-text">Rooms</span>
                                     <span class="info-box-number">
-                                        10
-                                        <small>%</small>
-                                    </span>
+                                        0
+                                        0 </span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -111,11 +110,11 @@ require_once('../partials/head.php');
                         <!-- /.col -->
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="info-box mb-3">
-                                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+                                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-house-damage"></i></span>
 
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Likes</span>
-                                    <span class="info-box-number">41,410</span>
+                                    <span class="info-box-text">Vacant Rooms</span>
+                                    <span class="info-box-number">0</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -128,11 +127,11 @@ require_once('../partials/head.php');
 
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="info-box mb-3">
-                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-calendar-check"></i></span>
 
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Sales</span>
-                                    <span class="info-box-number">760</span>
+                                    <span class="info-box-text">Reservations</span>
+                                    <span class="info-box-number">0</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -141,11 +140,11 @@ require_once('../partials/head.php');
                         <!-- /.col -->
                         <div class="col-12 col-sm-6 col-md-3">
                             <div class="info-box mb-3">
-                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-money-bill-alt"></i></span>
 
                                 <div class="info-box-content">
-                                    <span class="info-box-text">New Members</span>
-                                    <span class="info-box-number">2,000</span>
+                                    <span class="info-box-text">Reservations Revenue</span>
+                                    <span class="info-box-number">Ksh 0</span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
