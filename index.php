@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Tue Nov 02 2021
+ * Created on Tue Jan 04 2022
  *
  *  Devlan - devlan.co.ke 
  *
@@ -9,7 +9,7 @@
  *
  * The Devlan End User License Agreement
  *
- * Copyright (c) 2021 Devlan
+ * Copyright (c) 2022 Devlan
  *
  * 1. GRANT OF LICENSE
  * Devlan hereby grants to you (an individual) the revocable, personal, non-exclusive, and nontransferable right to
@@ -60,6 +60,7 @@
  */
 
 
+
 if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
     $uri = 'https://';
 } else {
@@ -67,5 +68,5 @@ if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
 }
 $uri .= $_SERVER['HTTP_HOST'];
 /* Redirect To Index Under Views */
-header('Location: ' . $uri . '/inventory_MIS/views/');
+header('Location: ' . $uri . '/e_reservation/views/');
 exit;
