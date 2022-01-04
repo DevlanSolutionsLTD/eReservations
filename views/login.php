@@ -58,6 +58,38 @@
  * IN NO EVENT WILL DEVLAN  LIABILITY FOR ANY CLAIM, WHETHER IN CONTRACT 
  * TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  */
+
+
+session_start();
+require_once '../config/config.php';
+
+
+if (isset($_POST['login'])) {
+    /* Post Auth Values */
+    $user_email = $_POST['user_email'];
+    $user_password = sha1(md5($_POST['user_password']));
+
+    /* Prepare SQL */
+    $stmt = $mysqli->prepare("SELECT  user_email, user_password, user_id 
+    FROM users  WHERE  user_email = ?  AND user_password =?");
+
+    /* Bind Auth Params */
+    $stmt->bind_param('ss', $user_email, $user_password);
+    $stmt->execute();
+
+    /* Fetch Results */
+    $stmt->bind_result($user_email, $user_password, $user_id);
+    $rs = $stmt->fetch();
+
+    /* Persist Sessions */
+    $_SESSION['user_id'] = $user_id;
+
+    if ($rs) {
+        header("location:dashboard");
+    } else {
+        $err = "Access Denied Please Check Your Credentials";
+    }
+}
 require_once('../partials/head.php');
 ?>
 
