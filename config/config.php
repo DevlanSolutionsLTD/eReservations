@@ -62,5 +62,5 @@
 $dbuser = "root";
 $dbpass = "";
 $host = "localhost";
-$db = "inventory";
+$db = "e_reservation";
 $mysqli = new mysqli($host, $dbuser, $dbpass, $db);
