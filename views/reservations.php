@@ -102,20 +102,22 @@ require_once('../partials/head.php');
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-6">
-                                <div class="card-deck">
-                                    <div class="card">
-                                        <img class="card-img-top" src="../public/img/mpesa.png" alt="Card image cap">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Lipa Na Mpesa</h5>
-                                            <p class="card-text">Pay Reservation Bill Using Mpesa</p>
+                            <div class="d-flex justify-content-center">
+                                <div class="">
+                                    <div class="card-deck">
+                                        <div class="card">
+                                            <img class="card-img-top" src="../public/img/mpesa.png" alt="Card image cap">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Lipa Na Mpesa</h5>
+                                                <p class="card-text">Pay Reservation Bill Using Mpesa</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="card">
-                                        <img class="card-img-top" src="../public/img/equity.png" alt="Card image cap">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Equity Bank Credit Card</h5>
-                                            <p class="card-text">Pay Reservation Bill Using Equity Bank Credit Card</p>
+                                        <div class="card">
+                                            <img class="card-img-top" src="../public/img/equity.png" alt="Card image cap">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Equity Bank Credit Card</h5>
+                                                <p class="card-text">Pay Reservation Bill Using Equity Bank Credit Card</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
