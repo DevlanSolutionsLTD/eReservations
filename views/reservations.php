@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Tue Jan 04 2022
+ * Created on Wed Jan 05 2022
  *
  *  Devlan - devlan.co.ke 
  *
@@ -60,90 +60,82 @@
  */
 
 
-session_start();
-require_once '../config/config.php';
-
-if (isset($_POST['login'])) {
-    /* Post Auth Values */
-    $user_email = $_POST['user_email'];
-    $user_password = sha1(md5($_POST['user_password']));
-
-    /* Prepare SQL */
-    $stmt = $mysqli->prepare("SELECT  user_email, user_password, user_id 
-    FROM users  WHERE  user_email = ?  AND user_password =?");
-
-    /* Bind Auth Params */
-    $stmt->bind_param('ss', $user_email, $user_password);
-    $stmt->execute();
-
-    /* Fetch Results */
-    $stmt->bind_result($user_email, $user_password, $user_id);
-    $rs = $stmt->fetch();
-
-    /* Persist Sessions */
-    $_SESSION['user_id'] = $user_id;
-
-    if ($rs) {
-        header("location:dashboard");
-    } else {
-        $err = "Access Denied Please Check Your Credentials";
-    }
-}
 require_once('../partials/head.php');
 ?>
 
-<body class="hold-transition login-page">
-    <div class="login-box">
-        <div class="login-logo">
-            <a href=""><b>e</b>Reservations</a>
-        </div>
-        <!-- /.login-logo -->
-        <div class="card">
-            <div class="card-body login-card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
+<body class="hold-transition layout-top-nav">
+    <div class="wrapper">
 
-                <form method="post">
-                    <div class="input-group mb-3">
-                        <input type="email" class="form-control" name="user_email" placeholder="Email">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="password" class="form-control" name="user_password" placeholder="Password">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="icheck-primary">
-                                <input type="checkbox" id="remember">
-                                <label for="remember">
-                                    Remember Me
-                                </label>
-                            </div>
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-4">
-                            <button type="submit" name="login" class="btn btn-primary btn-block">Sign In</button>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                </form>
+        <!-- Navbar -->
+        <?php require_once('../partials/nav.php'); ?>
+        <!-- /.navbar -->
 
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark"> Reservations Checkout </h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="">Dashboard</a></li>
+                                <li class="breadcrumb-item active">Reservations Checkout</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
             </div>
-            <!-- /.login-card-body -->
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <div class="content">
+                <div class="container">
+                    <div class="container-fluid">
+                        <!-- <div class="text-right">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add Reservations Checkout</button>
+                        </div> -->
+                        <div class="text-center">
+                            <h5>Select Payment Vendor</h5>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="card-deck">
+                                    <div class="card">
+                                        <img class="card-img-top" src="../public/img/mpesa.png" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Lipa Na Mpesa</h5>
+                                            <p class="card-text">Pay Reservation Bill Using Mpesa</p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <img class="card-img-top" src="../public/img/equity.png" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Equity Bank Credit Card</h5>
+                                            <p class="card-text">Pay Reservation Bill Using Equity Bank Credit Card</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
         </div>
+        <!-- /.content-wrapper -->
+
+        <!-- Main Footer -->
+        <?php require_once('../partials/footer.php'); ?>
     </div>
-    <!-- /.login-box -->
+    <!-- ./wrapper -->
+
+    <!-- REQUIRED SCRIPTS -->
 
     <?php require_once('../partials/scripts.php'); ?>
 </body>
-
 
 </html>
