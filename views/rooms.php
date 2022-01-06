@@ -64,12 +64,9 @@ require_once('../config/codeGen.php');
 require_once('../config/config.php');
 if (isset($_POST['add_room'])) {
     $room_id = $room_id;
-    //$fee_payment_academic_calendar_id = $_POST['fee_payment_academic_calendar_id'];
     $room_number = $_POST['room_number'];
-   
     $room_price = $_POST['room_price'];
 
-    
     $query = 'INSERT INTO rooms(room_id, room_number, room_price)
          VALUES (?,?,?)';
     $stmt = $mysqli->prepare($query);
@@ -88,11 +85,9 @@ if (isset($_POST['add_room'])) {
     }
 }
 
+/* Update Room */
 
-
-
-
-
+/* Delete Room */
 
 ?>
 
@@ -121,6 +116,7 @@ if (isset($_POST['add_room'])) {
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>
+
             <!-- /.content-header -->
 
             <!-- Main content -->
@@ -177,21 +173,88 @@ if (isset($_POST['add_room'])) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>
-                                                <a class="badge badge-primary" data-toggle="modal" href="#edit-">
-                                                    <i class="fas fa-edit"></i>
-                                                    Update
-                                                </a>
-                                                <a class="badge badge-danger" data-toggle="modal" href="#delete-">
-                                                    <i class="fas fa-trash"></i>
-                                                    Delete
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        <?php
+                                        $ret = "SELECT * FROM rooms";
+                                        $stmt = $mysqli->prepare($ret);
+                                        $stmt->execute(); //ok
+                                        $res = $stmt->get_result();
+                                        while ($room = $res->fetch_object()) {
+                                        ?>
+                                            <tr>
+                                                <td><?php echo $room->room_number; ?></td>
+                                                <td><?php echo $room->room_price; ?></td>
+                                                <td><?php echo $room->room_status; ?></td>
+                                                <td>
+                                                    <a class="badge badge-primary" data-toggle="modal" href="#edit-<?php echo $room->room_id; ?>">
+                                                        <i class="fas fa-edit"></i>
+                                                        Update
+                                                    </a>
+                                                    <!-- Update Modal -->
+                                                    <div class="modal fade" id="edit-<?php echo $room->room_id; ?>">
+                                                        <div class="modal-dialog  modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Fill All Values </h4>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <form method="post" enctype="multipart/form-data" role="form">
+                                                                        <div class="card-body">
+                                                                            <div class="row">
+                                                                                <div class="form-group col-md-6">
+                                                                                    <label for="">Room Number</label>
+                                                                                    <input type="hidden" value="<?php echo $room->room_id; ?>" required name="room_id" class="form-control">
+                                                                                    <input type="text" value="<?php echo $room->room_number; ?>" required name="room_number" class="form-control">
+                                                                                </div>
+                                                                                <div class="form-group col-md-6">
+                                                                                    <label for="">Room Rate (Price)</label>
+                                                                                    <input type="text" value="<?php echo $room->room_price; ?>" required name="room_price" class="form-control">
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="text-right">
+                                                                            <button type="submit" name="update_room" class="btn btn-primary">Submit</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <a class="badge badge-danger" data-toggle="modal" href="#delete-<?php echo $room->room_id; ?>">
+                                                        <i class="fas fa-trash"></i>
+                                                        Delete
+                                                    </a>
+                                                    <!-- Delete Moda -->
+                                                    <div class="modal fade" id="delete-<?php echo $room->room_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">CONFIRM DELETE</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal">
+                                                                        <span>&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <form method="POST">
+                                                                    <div class="modal-body text-center text-danger">
+                                                                        <h4>Delete <?php echo $room->room_number; ?></h4>
+                                                                        <br>
+                                                                        <!-- Hide This -->
+                                                                        <input type="hidden" name="room_id" value="<?php echo $room->room_id; ?>">
+                                                                        <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
+                                                                        <input type="submit" name="delete" value="Delete" class="text-center btn btn-danger">
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
