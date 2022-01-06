@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 04, 2022 at 12:46 PM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.10
+-- Generation Time: Jan 06, 2022 at 12:12 PM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 8.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -48,8 +48,15 @@ CREATE TABLE `rooms` (
   `room_id` varchar(200) NOT NULL,
   `room_number` varchar(200) NOT NULL,
   `room_price` varchar(200) NOT NULL,
-  `room_status` varchar(200) NOT NULL
+  `room_status` varchar(200) NOT NULL DEFAULT 'vacant'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `rooms`
+--
+
+INSERT INTO `rooms` (`room_id`, `room_number`, `room_price`, `room_status`) VALUES
+('Room-5740', '001', '2000', 'vacant');
 
 -- --------------------------------------------------------
 
@@ -63,6 +70,13 @@ CREATE TABLE `users` (
   `user_email` varchar(200) NOT NULL,
   `user_password` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `user_password`) VALUES
+('2345678', 'Demo', 'demo@test.com', 'a69681bcf334ae130217fea4505fd3c994f5683f');
 
 --
 -- Indexes for dumped tables
@@ -79,6 +93,12 @@ ALTER TABLE `reservations`
 --
 ALTER TABLE `rooms`
   ADD PRIMARY KEY (`room_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

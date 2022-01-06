@@ -85,8 +85,7 @@ $paycode = substr(str_shuffle("QWERTYUIOPLKJHGFDSAZXCVBNM1234567890"), 1, $alpha
 $length = 8;
 $defaultPass = substr(str_shuffle("QWERTYUIOPwertyuioplkjLKJHGFDSAZXCVBNM1234567890qhgfdsazxcvbnm"), 1, $length);
 
-$category_id = substr(str_shuffle("1234567890"), 1, 4) . '-' . substr(str_shuffle(rand("0987654321", 4)), 1, 4);
-$product_id = substr(str_shuffle("1234567890"), 1, 4) . '-' . substr(str_shuffle(rand("0987654321", 4)), 1, 4);
-$sale_id = substr(str_shuffle("1234567890"), 1, 4) . '-' . substr(str_shuffle(rand("0897563412", 4)), 1, 4);
+/* Room id*/
+$room_id = 'Room-' . substr(str_shuffle("1234567890"), 1, 4);
 
 

@@ -58,8 +58,42 @@
  * IN NO EVENT WILL DEVLAN  LIABILITY FOR ANY CLAIM, WHETHER IN CONTRACT 
  * TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  */
-
+session_start();
 require_once('../partials/head.php');
+require_once('../config/codeGen.php');
+require_once('../config/config.php');
+if (isset($_POST['add_room'])) {
+    $room_id = $room_id;
+    //$fee_payment_academic_calendar_id = $_POST['fee_payment_academic_calendar_id'];
+    $room_number = $_POST['room_number'];
+   
+    $room_price = $_POST['room_price'];
+
+    
+    $query = 'INSERT INTO rooms(room_id, room_number, room_price)
+         VALUES (?,?,?)';
+    $stmt = $mysqli->prepare($query);
+    $rc = $stmt->bind_param(
+        'sss',
+        $room_id,
+        $room_number,
+        $room_price
+    );
+    $stmt->execute();
+    if ($stmt) {
+        $success = "Room added";
+    } else {
+        //inject alert that task failed
+        $err = 'Please Try Again Or Try Later';
+    }
+}
+
+
+
+
+
+
+
 ?>
 
 <body class="hold-transition layout-top-nav">

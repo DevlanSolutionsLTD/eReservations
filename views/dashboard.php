@@ -58,8 +58,12 @@
  * IN NO EVENT WILL DEVLAN  LIABILITY FOR ANY CLAIM, WHETHER IN CONTRACT 
  * TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  */
-
+session_start();
+require_once('../config/config.php');
+require_once('../config/checklogin.php');
 require_once('../partials/head.php');
+require_once('../partials/analytics.php');
+checklogin();
 ?>
 
 <body class="hold-transition layout-top-nav">
@@ -100,8 +104,8 @@ require_once('../partials/head.php');
                                 <div class="info-box-content">
                                     <span class="info-box-text">Rooms</span>
                                     <span class="info-box-number">
-                                        0
-                                        0 </span>
+                                        <?php echo $rooms ?>
+                                        </span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -114,7 +118,7 @@ require_once('../partials/head.php');
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Vacant Rooms</span>
-                                    <span class="info-box-number">0</span>
+                                    <span class="info-box-number"><?php echo $vacant_rooms ?></span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -131,7 +135,7 @@ require_once('../partials/head.php');
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Reservations</span>
-                                    <span class="info-box-number">0</span>
+                                    <span class="info-box-number"><?php echo $reservation ?></span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
