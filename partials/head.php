@@ -22,7 +22,7 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="../public/plugins/select2/css/select2.min.css">
     <!-- SweetAlert2 -->
-    <link rel="stylesheet" href="../public/plugins/sweetalert2/bootstrap-4.min.css">
+    <link rel="stylesheet" href="../public/plugins/sweetalert2/sweetalert2.min.css">
     <!-- Data Tables CDN-->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css" />
