@@ -64,7 +64,15 @@ require_once('../partials/head.php');
 require_once('../config/codeGen.php');
 require_once('../config/config.php');
 
-
+/* Persist System Update */
+if (isset($_POST['reserve_room'])) {
+    $reservation_room_id = $_GET['room_id'];
+    $client_name  = $_POST['client_name'];
+    $client_id_no = $_POST['client_id_no'];
+    $client_phone = $_POST['client_phone'];
+    $mode_of_payment = $_POST['mode_of_payment'];
+    $duration = $_POST['duration'];
+}
 ?>
 
 <body class="hold-transition layout-top-nav">
@@ -109,7 +117,6 @@ require_once('../config/config.php');
                                             <div class="form-group col-md-6">
                                                 <label>Room Number</label>
                                                 <input type="text" readonly value="<?php echo $_GET['room_number']; ?>" required class="form-control">
-                                                <input type="hidden" name="reservation_iroom_id" readonly value="<?php echo $_GET['room_id']; ?>" required class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Room Price (Ksh)</label>
@@ -117,7 +124,7 @@ require_once('../config/config.php');
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Days Reserved</label>
-                                                <select type="text" name="" id="DaysReserved" required class="form-control">
+                                                <select type="text" name="duration" id="DaysReserved" required class="form-control">
                                                     <option>Select Days Reserved</option>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
@@ -146,18 +153,18 @@ require_once('../config/config.php');
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Client Phone Number</label>
-                                                <input type="text" name="reservation_client_mobile_number" required class="form-control">
+                                                <input type="text" name="client_phone" required class="form-control">
                                             </div>
                                             <div class="form-group col-md-12">
-                                                <label>Client Email</label>
-                                                <input type="text" name="reservation_client_email" required class="form-control">
+                                                <label>Client ID Number</label>
+                                                <input type="text" name="client_id_no" required class="form-control">
                                             </div>
                                         </div>
                                     </fieldset>
                                     <fieldset class="border border-primary p-2">
-                                        <legend class="w-auto text-primary font-weight-light">Payment Means</legend>
+                                        <legend class="w-auto text-primary font-weight-light">Mode Of Payment</legend>
                                         <div class="form-row">
-                                            <select type="text" name="reservation_payment_means" required class="form-control">
+                                            <select type="text" name="mode_of_payment" required class="form-control">
                                                 <option>Mpesa</option>
                                                 <option>Bank</option>
                                             </select>
@@ -166,7 +173,7 @@ require_once('../config/config.php');
                                     <br><br>
                                     <div class="text-right">
                                         <button name="reserve_room" class="btn btn-primary" type="submit">
-                                            Checkout Reservation For <?php echo $_GET['room_number']; ?>
+                                            Checkout Reservation For Room Number <?php echo $_GET['room_number']; ?>
                                         </button>
                                     </div>
                                     <br><br><br>
