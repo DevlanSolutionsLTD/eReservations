@@ -72,6 +72,15 @@ if (isset($_POST['reserve_room'])) {
     $client_phone = $_POST['client_phone'];
     $mode_of_payment = $_POST['mode_of_payment'];
     $duration = $_POST['duration'];
+
+    /* Seperate MPESA & Bank Deposit Logic */
+    if ($mode_of_payment == 'Mpesa') {
+        /* Load Mpesa Logic Here */
+    } else if ($mode_of_payment == 'Bank') {
+        /* Load Bank LOgic Here */
+    } else {
+        $err = "Your Shit Just Hit The Fan";
+    }
 }
 ?>
 
@@ -140,7 +149,7 @@ if (isset($_POST['reserve_room'])) {
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Payable Reservation Amount (Ksh)</label>
-                                                <input type="text" readonly name="" id="TotalReservationPrice" required class="form-control">
+                                                <input required type="text" readonly name="" id="TotalReservationPrice" required class="form-control">
                                             </div>
                                         </div>
                                     </fieldset>
@@ -149,7 +158,7 @@ if (isset($_POST['reserve_room'])) {
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label>Client Name</label>
-                                                <input type="text" name="reservation_client_name" required class="form-control">
+                                                <input type="text" name="client_name" required class="form-control">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Client Phone Number</label>
