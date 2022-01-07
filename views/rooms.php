@@ -86,8 +86,46 @@ if (isset($_POST['add_room'])) {
 }
 
 /* Update Room */
+if (isset($_POST['update_room'])) {
+    $room_id = $_POST['room_id'];
+    $room_number = $_POST['room_number'];
+    $room_price = $_POST['room_price'];
+
+    $query="UPDATE rooms set room_number=?,room_price=? WHERE room_id=?";
+    $stmt = $mysqli->prepare($query);
+    $rc = $stmt->bind_param(
+        'sss',
+        $room_number,
+        $room_price,
+        $room_id
+    );
+    $stmt->execute();
+
+    if ($stmt) {
+        $success = "Room Updated";
+    } else {
+        //inject alert that task failed
+        $err = 'Please Try Again Or Try Later';
+    }
+}
+
 
 /* Delete Room */
+if (isset($_POST['delete'])) {
+    $error = 0;
+    $room_id = $_POST['room_id'];
+    if (!$error) {
+        $sql = "DELETE FROM  rooms  WHERE room_id ='$room_id'";
+        $stmt = $mysqli->prepare($sql);
+        $stmt->execute();
+        //declare a varible which will be passed to alert function
+        if ($stmt) {
+            $success = "Deleted" && header("refresh:1; url=rooms");
+        } else {
+            $err = "Please Try Again Or Try Later";
+        }
+    }
+}
 
 ?>
 
