@@ -221,6 +221,10 @@ if (isset($_POST['delete'])) {
                                                 <td><?php echo $room->room_price; ?></td>
                                                 <td><?php echo $room->room_status; ?></td>
                                                 <td>
+                                                    <a class="badge badge-success" href="reserve_room?room_id=<?php echo $room->room_id; ?>&room_price=<?php echo $room->room_price; ?>room_number=<?php echo $room->room_number; ?>">
+                                                        <i class="fas fa-calendar-check"></i>
+                                                        Reserve
+                                                    </a>
                                                     <a class="badge badge-primary" data-toggle="modal" href="#edit-<?php echo $room->room_id; ?>">
                                                         <i class="fas fa-edit"></i>
                                                         Update
