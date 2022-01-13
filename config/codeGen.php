@@ -88,4 +88,7 @@ $defaultPass = substr(str_shuffle("QWERTYUIOPwertyuioplkjLKJHGFDSAZXCVBNM1234567
 /* Room id*/
 $room_id = 'Room-' . substr(str_shuffle("1234567890"), 1, 4);
 
+/* Room id*/
+$reservation_id = 'Reservation-' . substr(str_shuffle("1234567890"), 1, 4);
+
 
