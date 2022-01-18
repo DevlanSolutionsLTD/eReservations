@@ -66,7 +66,7 @@ require_once('../config/config.php');
 
 /* Persist System Update */
 if (isset($_POST['reserve_room'])) {
-    $reservation_id=$reservation_id;
+    $reservation_id = $reservation_id;
     $reservation_room_id = $_GET['room_id'];
     $client_name  = $_POST['client_name'];
     $client_id_no = $_POST['client_id_no'];
@@ -74,40 +74,36 @@ if (isset($_POST['reserve_room'])) {
     $mode_of_payment = $_POST['mode_of_payment'];
     $duration = $_POST['duration'];
     $total_cost = $_POST['total_cost'];
-    
+
 
 
     /* Seperate MPESA & Bank Deposit Logic */
     if ($mode_of_payment == 'Mpesa') {
-       
-       
-    $query = 'INSERT INTO reservations(reservation_id, reservation_room_id,client_name,client_id_no,client_phone,mode_of_payment,cost )
+
+
+        $query = 'INSERT INTO reservations(reservation_id, reservation_room_id,client_name,client_id_no,client_phone,mode_of_payment,cost )
          VALUES (?,?,?,?,?,?,?)';
-    $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param(
-        'sssssss',
-        $reservation_id,
-        $reservation_room_id,
-        $client_name,
-        $client_id_no,
-        $client_phone,
-        $mode_of_payment,
-        $total_cost
+        $stmt = $mysqli->prepare($query);
+        $rc = $stmt->bind_param(
+            'sssssss',
+            $reservation_id,
+            $reservation_room_id,
+            $client_name,
+            $client_id_no,
+            $client_phone,
+            $mode_of_payment,
+            $total_cost
 
-    );
-    $stmt->execute();
-    if ($stmt) {
-         /* Load Mpesa Logic Here */
-    include_once('../Mpesa/stkpay.php');
-        $success = "Room Reserved";
-    } else {
-        //inject alert that task failed
-        $err = 'Please Try Again Or Try Later';
-    }
-
-
-       
-        
+        );
+        $stmt->execute();
+        if ($stmt) {
+            /* Load Mpesa Logic Here */
+            include_once('../Mpesa/stkpay.php');
+            $success = "Room Reserved";
+        } else {
+            //inject alert that task failed
+            $err = 'Please Try Again Or Try Later';
+        }
     } else if ($mode_of_payment == 'Bank') {
         /* Load Bank LOgic Here */
     } else {
@@ -207,7 +203,7 @@ if (isset($_POST['reserve_room'])) {
                                         <div class="form-row">
                                             <select type="text" name="mode_of_payment" required class="form-control">
                                                 <option>Mpesa</option>
-                                                <option>Bank</option>
+                                                <option>Card Payment</option>
                                             </select>
                                         </div>
                                     </fieldset>
