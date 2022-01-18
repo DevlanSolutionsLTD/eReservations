@@ -90,9 +90,11 @@ if (isset($_GET['status'])) {
         if ($res->status) {
             $amountPaid = $res->data->charged_amount;
             $amountToPay = $res->data->meta->price;
+            $status = $_GET['status'];
+            $tx_ref = $_GET['transaction_id'];
+            $transaction_id = $_GET['transaction_id'];
             if ($amountPaid >= $amountToPay) {
-                echo "Payment successful";
-                //* Continue to give item to the user
+                header('Location: rooms');
             } else {
                 echo "We Are Having Problem Processing Your Payment";
             }
