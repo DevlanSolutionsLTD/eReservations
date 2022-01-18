@@ -71,6 +71,7 @@ if (isset($_POST['reserve_room'])) {
     $client_name  = $_POST['client_name'];
     $client_id_no = $_POST['client_id_no'];
     $client_phone = $_POST['client_phone'];
+    $client_email = $_POST['client_email'];
     $mode_of_payment = $_POST['mode_of_payment'];
     $duration = $_POST['duration'];
     $total_cost = $_POST['total_cost'];
@@ -81,15 +82,16 @@ if (isset($_POST['reserve_room'])) {
     if ($mode_of_payment == 'Mpesa') {
 
 
-        $query = 'INSERT INTO reservations(reservation_id, reservation_room_id,client_name,client_id_no,client_phone,mode_of_payment,cost )
-         VALUES (?,?,?,?,?,?,?)';
+        $query = 'INSERT INTO reservations(reservation_id, reservation_room_id,client_name,client_id_no, client_email, client_phone, mode_of_payment,cost )
+         VALUES (?,?,?,?,?,?,?,?)';
         $stmt = $mysqli->prepare($query);
         $rc = $stmt->bind_param(
-            'sssssss',
+            'ssssssss',
             $reservation_id,
             $reservation_room_id,
             $client_name,
             $client_id_no,
+            $client_email,
             $client_phone,
             $mode_of_payment,
             $total_cost
@@ -104,8 +106,9 @@ if (isset($_POST['reserve_room'])) {
             //inject alert that task failed
             $err = 'Please Try Again Or Try Later';
         }
-    } else if ($mode_of_payment == 'Bank') {
-        /* Load Bank LOgic Here */
+    } else if ($mode_of_payment == 'card') {
+        /* Process Card Payment Here */
+        include('../helpers/flutterwave/process_payment.php');
     } else {
         $err = "Your Shit Just Hit The Fan";
     }
@@ -192,9 +195,13 @@ if (isset($_POST['reserve_room'])) {
                                                 <label>Client Phone Number</label>
                                                 <input type="text" name="client_phone" required class="form-control">
                                             </div>
-                                            <div class="form-group col-md-12">
+                                            <div class="form-group col-md-6">
                                                 <label>Client ID Number</label>
                                                 <input type="text" name="client_id_no" required class="form-control">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Client Email</label>
+                                                <input type="text" name="client_email" required class="form-control">
                                             </div>
                                         </div>
                                     </fieldset>
@@ -203,7 +210,7 @@ if (isset($_POST['reserve_room'])) {
                                         <div class="form-row">
                                             <select type="text" name="mode_of_payment" required class="form-control">
                                                 <option>Mpesa</option>
-                                                <option>Card Payment</option>
+                                                <option value="card">Card Payment</option>
                                             </select>
                                         </div>
                                     </fieldset>
