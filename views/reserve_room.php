@@ -118,7 +118,6 @@ if (isset($_POST['reserve_room'])) {
             $mode_of_payment,
             $total_cost,
             $duration
-
         );
         $stmt->execute();
         if ($stmt) {

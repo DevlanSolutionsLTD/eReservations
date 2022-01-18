@@ -137,15 +137,20 @@ if (isset($_GET['status'])) {
                 $reservation_prepare->execute();
 
                 if ($prepare && $room_prepare) {
-                    echo   "Room Reserved";
+                    /* Redirect To Rooms And Show Alert */
+                    $_SESSION['success'] = 'Room Reserved';
+                    header('Location: rooms');
                 } else {
-                    $err = "Failed To Persist Transaction Details";
+                    $_SESSION['err'] = 'Failed To Persist Transaction Details';
+                    header('Location: rooms');
                 }
             } else {
-                echo "We Are Having Problem Processing Your Payment";
+                $_SESSION['err'] = 'We Are Having Problem Processing Your Payment';
+                header('Location: rooms');
             }
         } else {
-            echo 'Can Not Process Payment, Please Use MPESA Payment Method';
+            $_SESSION['err'] = 'Can Not Process Payment, Please Use MPESA Payment Method';
+            header('Location: rooms');
         }
     }
 }

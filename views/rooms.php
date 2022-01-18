@@ -125,6 +125,15 @@ if (isset($_POST['delete'])) {
     }
 }
 
+
+/* Credit Card Payments Processor Alerts Via Session Variable */
+if ($_SESSION['success']) {
+    echo $_SESSION['success'];
+    unset($_SESSION['success']);
+} else {
+    echo $_SESSION['success'];
+    unset($_SESSION['success']);
+}
 ?>
 
 <body class="hold-transition layout-top-nav">
