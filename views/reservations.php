@@ -62,6 +62,20 @@ session_start();
 require_once('../partials/head.php');
 require_once('../config/codeGen.php');
 require_once('../config/config.php');
+/* Delete This Reservation */
+if (isset($_POST['delete'])) {
+    $reservation_id = $_POST['reservation_id'];
+    /* Persist */
+    $sql = "DELETE FROM reservations WHERE reservation_id =?";
+    $prepare = $mysqli->prepare($sql);
+    $bind = $prepare->bind_param('s', $reservation_id);
+    $prepare->execute();
+    if ($prepare) {
+        $success = "Reservation Details Deleted";
+    } else {
+        $err = "Failed!, Please Try Again Later";
+    }
+}
 ?>
 
 <body class="hold-transition layout-top-nav">
