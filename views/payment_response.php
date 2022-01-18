@@ -78,7 +78,7 @@ if (isset($_GET['status'])) {
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => array(
                 "Content-Type: application/json",
-                "Authorization: Bearer FLWSECK_TEST-eee25be1b44ef9a132a872075b3a0910-X"
+                "Authorization: Bearer FLWSECK_TEST-a90855faf858298f0b14bfb4621e53fe-X"
             ),
         ));
 
@@ -91,14 +91,13 @@ if (isset($_GET['status'])) {
             $amountPaid = $res->data->charged_amount;
             $amountToPay = $res->data->meta->price;
             if ($amountPaid >= $amountToPay) {
-                $success = "Payment successful";
-
+                echo "Payment successful";
                 //* Continue to give item to the user
             } else {
-                $err = "We Are Having Problem Processing Your Payment";
+                echo "We Are Having Problem Processing Your Payment";
             }
         } else {
-            $err = 'Can Not Process Payment, Please Use MPESA Payment Method';
+            echo 'Can Not Process Payment, Please Use MPESA Payment Method';
         }
     }
 }
