@@ -97,7 +97,7 @@ if (isset($_GET['status'])) {
                 echo '</pre>'; */
 
                 /* Insert This Payment Details To Payment*/
-                $payment_txn_code = $res->data->tx_ref;
+                $payment_txn_code = $res->data->flw_ref;
                 $payment_amount = $amountPaid;
                 $payment_date_posted = $res->data->created_at;
                 $payment_reservation_id = $_GET['Reservation'];
