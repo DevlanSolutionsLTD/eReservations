@@ -107,9 +107,11 @@ if (isset($_GET['status'])) {
                 $sql = "INSERT INTO reservation_payments (payment_reservation_id, payment_room_id, payment_amount, payment_txn_code, payment_date_posted)
                 VALUES(?,?,?,?,?)";
                 $room_sql = "UPDATE rooms SET room_status =?, WHERE room_id = ?";
+                $reservation_sql = "UPDATE reservations SET transaction_id = ? WHERE reservation_id =?";
 
                 $prepare = $mysqli->prepare($sql);
                 $room_prepare = $mysqli->prepare($room_sql);
+                $reservation_prepare = $mysqli->prepare($reservation_sql);
 
                 $bind = $prepare->bind_param(
                     'sssss',
@@ -119,14 +121,20 @@ if (isset($_GET['status'])) {
                     $payment_txn_code,
                     $payment_date_posted
                 );
-                $room_bind = $room_prepare(
+                $room_bind = $room_prepare->bind_param(
                     'ss',
                     $room_status,
                     $payment_room_id
                 );
+                $reservation_bind = $reservation_prepare->bind_param(
+                    'ss',
+                    $payment_txn_code,
+                    $payment_reservation_id
+                );
 
                 $prepare->execute();
                 $room_prepare->execute();
+                $reservation_prepare->execute();
 
                 if ($prepare && $room_prepare) {
                     echo   "Room Reserved";
