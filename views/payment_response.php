@@ -94,7 +94,7 @@ if (isset($_GET['status'])) {
             if ($amountPaid >= $amountToPay) {
 
                 /* Insert This Payment Details To Payment*/
-                $payment_txn_code = $res->data->flw_ref;
+                $payment_txn_code = $res->data->tx_ref;
                 $payment_amount = $amountPaid;
                 $payment_date_posted = $res->data->created_at;
                 $payment_reservation_id = $_GET['Reservation'];
@@ -106,7 +106,7 @@ if (isset($_GET['status'])) {
                 /* Insert */
                 $sql = "INSERT INTO reservation_payments (payment_reservation_id, payment_room_id, payment_amount, payment_txn_code, payment_date_posted)
                 VALUES(?,?,?,?,?)";
-                $room_sql = "UPDATE rooms SET room_status =?, WHERE room_id = ?";
+                $room_sql = "UPDATE rooms SET room_status =? WHERE room_id = ?";
                 $reservation_sql = "UPDATE reservations SET transaction_id = ? WHERE reservation_id =?";
 
                 $prepare = $mysqli->prepare($sql);
