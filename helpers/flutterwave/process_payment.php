@@ -108,7 +108,7 @@ if ($res->status == 'success') {
     /* Dirty Approach */
      $link = $res->data->link;
     header('Location: ' . $link);
-    
+
 } else {
     $err =  'We can not process your payment';
 }

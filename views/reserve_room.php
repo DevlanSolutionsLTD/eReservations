@@ -108,7 +108,30 @@ if (isset($_POST['reserve_room'])) {
         }
     } else if ($mode_of_payment == 'card') {
         /* Process Card Payment Here */
-        include('../helpers/flutterwave/process_payment.php');
+        $query = 'INSERT INTO reservations(reservation_id, reservation_room_id,client_name,client_id_no, client_email, client_phone, mode_of_payment,cost )
+         VALUES (?,?,?,?,?,?,?,?)';
+        $stmt = $mysqli->prepare($query);
+        $rc = $stmt->bind_param(
+            'ssssssss',
+            $reservation_id,
+            $reservation_room_id,
+            $client_name,
+            $client_id_no,
+            $client_email,
+            $client_phone,
+            $mode_of_payment,
+            $total_cost
+
+        );
+        $stmt->execute();
+        if ($stmt) {
+            /* Load Mpesa Logic Here */
+            include('../helpers/flutterwave/process_payment.php');
+            $success = "Room Reserved";
+        } else {
+            //inject alert that task failed
+            $err = 'Please Try Again Or Try Later';
+        }
     } else {
         $err = "Your Shit Just Hit The Fan";
     }

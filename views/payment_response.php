@@ -58,6 +58,7 @@
  * IN NO EVENT WILL DEVLAN  LIABILITY FOR ANY CLAIM, WHETHER IN CONTRACT 
  * TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  */
+include('../config/config.php');
 
 if (isset($_GET['status'])) {
     //* check payment status
@@ -90,11 +91,16 @@ if (isset($_GET['status'])) {
         if ($res->status) {
             $amountPaid = $res->data->charged_amount;
             $amountToPay = $res->data->meta->price;
-            $status = $_GET['status'];
-            $tx_ref = $_GET['transaction_id'];
-            $transaction_id = $_GET['transaction_id'];
             if ($amountPaid >= $amountToPay) {
-                header('Location: rooms');
+                echo '<pre>';
+                echo $response;
+                echo '</pre>';
+                /* Insert This Payment Details To Payment*/
+                $payment_txn_code = $res->data->tx_ref;
+                $payment_amount = $amountPaid;
+                $payment_date_posted = $res->data->created_at;
+                $payment_reservation_id = $_GET['payment_reservation_id'];
+                $payment_room_id = $_GET['payment_room_id'];
             } else {
                 echo "We Are Having Problem Processing Your Payment";
             }
