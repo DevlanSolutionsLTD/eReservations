@@ -232,10 +232,18 @@ if (isset($_SESSION['err'])) {
                                                 <td><?php echo $room->room_price; ?></td>
                                                 <td><?php echo $room->room_status; ?></td>
                                                 <td>
-                                                    <a class="badge badge-success" href="reserve_room?room_id=<?php echo $room->room_id; ?>&room_price=<?php echo $room->room_price; ?>&room_number=<?php echo $room->room_number; ?>">
-                                                        <i class="fas fa-calendar-check"></i>
-                                                        Reserve
-                                                    </a>
+                                                    <?php
+                                                    if ($room->room_status == 'vacant') { ?>
+                                                        <a class="badge badge-success" href="reserve_room?room_id=<?php echo $room->room_id; ?>&room_price=<?php echo $room->room_price; ?>&room_number=<?php echo $room->room_number; ?>">
+                                                            <i class="fas fa-calendar-check"></i>
+                                                            Reserve
+                                                        </a>
+                                                    <?php } else { ?>
+                                                        <a class="badge badge-warning" data-toggle="modal" href="#vacate-<?php echo $room->room_id; ?>">
+                                                            <i class="fas fa-running"></i>
+                                                            Vacate Room
+                                                        </a>
+                                                    <?php } ?>
                                                     <a class="badge badge-primary" data-toggle="modal" href="#edit-<?php echo $room->room_id; ?>">
                                                         <i class="fas fa-edit"></i>
                                                         Update
@@ -293,6 +301,29 @@ if (isset($_SESSION['err'])) {
                                                                 <form method="POST">
                                                                     <div class="modal-body text-center text-danger">
                                                                         <h4>Delete <?php echo $room->room_number; ?></h4>
+                                                                        <br>
+                                                                        <!-- Hide This -->
+                                                                        <input type="hidden" name="room_id" value="<?php echo $room->room_id; ?>">
+                                                                        <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
+                                                                        <input type="submit" name="delete" value="Delete" class="text-center btn btn-danger">
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Vacate Room Modal -->
+                                                    <div class="modal fade" id="vacate-<?php echo $room->room_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">CONFIRM VACATE</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal">
+                                                                        <span>&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <form method="POST">
+                                                                    <div class="modal-body text-center text-danger">
+                                                                        <h4>Vacate <?php echo $room->room_number; ?></h4>
                                                                         <br>
                                                                         <!-- Hide This -->
                                                                         <input type="hidden" name="room_id" value="<?php echo $room->room_id; ?>">
