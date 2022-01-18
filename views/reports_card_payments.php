@@ -78,7 +78,7 @@ require_once('../config/config.php');
                 <div class="container">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0 text-dark"> Rooms Reservations Reports </h1>
+                            <h1 class="m-0 text-dark"> Rooms Reservations Card Payment Records </h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
@@ -131,7 +131,7 @@ require_once('../config/config.php');
                                                     Name : <?php echo $reservations->client_name; ?><br>
                                                     Email : <?php echo $reservations->client_email; ?> <br>
                                                     Phone : <?php echo $reservations->client_phone; ?> <br>
-                                                    ID No : <?php echo $reservations->client_id_no; ?>
+                                                    ID No : <?php echo $reservations->client_id_no; ?> <br>
                                                 </td>
                                             </tr>
                                         <?php } ?>
