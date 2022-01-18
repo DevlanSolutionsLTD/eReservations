@@ -105,7 +105,7 @@ checklogin();
                                     <span class="info-box-text">Rooms</span>
                                     <span class="info-box-number">
                                         <?php echo $rooms ?>
-                                        </span>
+                                    </span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
@@ -148,7 +148,7 @@ checklogin();
 
                                 <div class="info-box-content">
                                     <span class="info-box-text">Reservations Revenue</span>
-                                    <span class="info-box-number">Ksh 0</span>
+                                    <span class="info-box-number">Ksh <?php echo $incomes; ?></span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>

@@ -62,20 +62,6 @@ session_start();
 require_once('../partials/head.php');
 require_once('../config/codeGen.php');
 require_once('../config/config.php');
-/* Delete This Reservation */
-if (isset($_POST['delete'])) {
-    $reservation_id = $_POST['reservation_id'];
-    /* Persist */
-    $sql = "DELETE FROM reservations WHERE reservation_id =?";
-    $prepare = $mysqli->prepare($sql);
-    $bind = $prepare->bind_param('s', $reservation_id);
-    $prepare->execute();
-    if ($prepare) {
-        $success = "Reservation Details Deleted";
-    } else {
-        $err = "Failed!, Please Try Again Later";
-    }
-}
 ?>
 
 <body class="hold-transition layout-top-nav">
@@ -92,11 +78,12 @@ if (isset($_POST['delete'])) {
                 <div class="container">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0 text-dark"> Rooms Reservations </h1>
+                            <h1 class="m-0 text-dark"> Rooms Reservations Card Payment Records </h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="">Reports</a></li>
                                 <li class="breadcrumb-item active">Reservations</li>
                             </ol>
                         </div><!-- /.col -->
@@ -112,18 +99,18 @@ if (isset($_POST['delete'])) {
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-12">
-                                <table id="" class="table table-bordered table-hover">
+                                <table id="export-data-table" class="table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Room Number</th>
+                                            <th>Reservation Details</th>
+                                            <th>Payment Details</th>
                                             <th>Client Details</th>
-                                            <th>Payment Status</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $ret = "SELECT * FROM reservations r 
+                                        $ret = "SELECT * FROM reservation_payments rp
+                                        INNER JOIN reservations r ON rp.payment_txn_code = r.transaction_id
                                         INNER JOIN rooms rm ON rm.room_id = r.reservation_room_id";
                                         $stmt = $mysqli->prepare($ret);
                                         $stmt->execute(); //ok
@@ -132,47 +119,19 @@ if (isset($_POST['delete'])) {
                                         ?>
                                             <tr>
                                                 <td>
-                                                    <?php echo $reservations->room_number; ?>
+                                                    Room No : <?php echo $reservations->room_number; ?> <br>
+                                                    Duration : <?php echo $reservations->duration; ?> Day(s)
                                                 </td>
                                                 <td>
-                                                    Name: <?php echo $reservations->client_name; ?> <br>
-                                                    Email: <?php echo $reservations->client_email; ?> <br>
-                                                    Phone No : <?php echo $reservations->client_phone; ?> <br>
-                                                    ID No: <?php echo $reservations->client_id_no; ?> <br>
+                                                    Amount : Ksh <?php echo $reservations->payment_amount; ?><br>
+                                                    TXN ID :<?php echo $reservations->payment_txn_code; ?> <br>
+                                                    Date : <?php echo date('d M Y g:ia', strtotime($reservations->payment_date_posted)); ?><br>
                                                 </td>
                                                 <td>
-                                                    Amount: Ksh <?php echo $reservations->cost; ?><br>
-                                                    Method: <?php echo $reservations->mode_of_payment; ?><br>
-                                                    TXN ID :<?php echo $reservations->transaction_id; ?>
-                                                </td>
-                                                <td>
-                                                    <a class="badge badge-danger" data-toggle="modal" href="#delete-<?php echo $reservations->reservation_id; ?>">
-                                                        <i class="fas fa-trash"></i>
-                                                        Delete
-                                                    </a>
-                                                    <!-- Delete Moda -->
-                                                    <div class="modal fade" id="delete-<?php echo $reservations->reservation_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">CONFIRM DELETE</h5>
-                                                                    <button type="button" class="close" data-dismiss="modal">
-                                                                        <span>&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <form method="POST">
-                                                                    <div class="modal-body text-center text-danger">
-                                                                        <h4>Delete This Reservation</h4>
-                                                                        <br>
-                                                                        <!-- Hide This -->
-                                                                        <input type="hidden" name="reservation_id" value="<?php echo $reservations->reservation_id; ?>">
-                                                                        <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                                        <input type="submit" name="delete" value="Delete" class="text-center btn btn-danger">
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    Name : <?php echo $reservations->client_name; ?><br>
+                                                    Email : <?php echo $reservations->client_email; ?> <br>
+                                                    Phone : <?php echo $reservations->client_phone; ?> <br>
+                                                    ID No : <?php echo $reservations->client_id_no; ?> <br>
                                                 </td>
                                             </tr>
                                         <?php } ?>

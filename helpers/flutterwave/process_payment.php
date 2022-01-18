@@ -59,68 +59,58 @@
  * TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  */
 
-require_once('../config/config.php');
+/* Global Variables */
+$Reservation = $reservation_id;
+$Room = $reservation_room_id;
 
-$callbackJSONData = file_get_contents('php://input');
+//* Prepare our rave request
+$request = [
+    'tx_ref' => time(), /* Just Timestamp Every Transaction */
+    'amount' => $total_cost,
+    'currency' => 'KES',
+    'payment_options' => 'card',
+    /* Update This URL To Match Your Needs */
+    'redirect_url' => 'http://127.0.0.1/e_reservation/views/payment_response.php?Reservation=' . $Reservation . '&Room=' . $Room,
+    'customer' => [
+        'email' => $client_email,
+        'name' => $client_name,
+    ],
+    'meta' => [
+        'price' => $total_cost
+    ],
+    'customizations' => [
+        'title' => 'Reservation Payment',
+        'description' => $client_name . 'Room Reservation'
+    ]
+];
 
-$logFile = "stkPush.json";
-$log = fopen($logFile, "a");
-fwrite($log, $callbackJSONData);
-fclose($log);
+/* Call Flutterwave Endpoint */
+$curl = curl_init();
 
-$callbackData = json_decode($callbackJSONData);
+curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://api.flutterwave.com/v3/payments',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS => json_encode($request),
+    CURLOPT_HTTPHEADER => array(
+        'Authorization: Bearer FLWSECK_TEST-a90855faf858298f0b14bfb4621e53fe-X', /* To Do : Never hard code this bearer */
+        'Content-Type: application/json'
+    ),
+));
 
-$resultCode = $callbackData->Body->stkCallback->ResultCode;
-$resultDesc = $callbackData->Body->stkCallback->ResultDesc;
-$merchantRequestID = $callbackData->Body->stkCallback->MerchantRequestID;
-$checkoutRequestID = $callbackData->Body->stkCallback->CheckoutRequestID;
-$mpesa = $callbackData->stkCallback->Body->CallbackMetadata->Item[0]->Name;
-$amount = $callbackData->Body->stkCallback->CallbackMetadata->Item[0]->Value;
-$mpesaReceiptNumber = $callbackData->Body->stkCallback->CallbackMetadata->Item[1]->Value;
-$balance = $callbackData->stkCallback->Body->CallbackMetadata->Item[2]->Value;
-$b2CUtilityAccountAvailableFunds = $callbackData->Body->stkCallback->CallbackMetadata->Item[3]->Value;
-$transactionDate = $callbackData->Body->stkCallback->CallbackMetadata->Item[3]->Value;
-$phoneNumber = $callbackData->Body->stkCallback->CallbackMetadata->Item[4]->Value;
+$response = curl_exec($curl);
 
-$amount = strval($amount);
-if ($resultCode == 0) {
-    $insert = $mysqli->query("INSERT INTO `stkpush`(`merchantRequestID`, `checkoutRequestID`,`resultCode`, `resultDesc`, `amount`, `mpesaReceiptNumber`, `transactionDate`, `phoneNumber`)
-VALUES ('$merchantRequestID', '$checkoutRequestID','$resultCode', '$resultDesc', '$amount','$mpesaReceiptNumber','$transactionDate','$phoneNumber')");
+curl_close($curl);
 
-    //update Reservation 
-    $query1 = "UPDATE reservations set duration=?,transaction_id=? WHERE client_phone=? AND cost=?";
-    $stmt1 = $mysqli->prepare($query1);
-    $rc1 = $stmt1->bind_param(
-        'ssss',
-
-        $transactionDate,
-        $mpesaReceiptNumber,
-        $phoneNumber,
-        $amount
-
-    );
-
-    //Get Room id
-    $ret = "SELECT * FROM reservations WHERE client_phone='$phoneNumber' AND cost='$amount'";
-    $stmt = $mysqli->prepare($ret);
-    $stmt->execute(); //ok
-    $res = $stmt->get_result();
-    while ($r = $res->fetch_object()) {
-
-        //UPDATE ROOM STATUS
-        $room_id = $r->reservation_room_id;
-        $room_status = "reserved";
-        $query2 = "UPDATE rooms set room_status=? WHERE room_id=?";
-        $stmt2 = $mysqli->prepare($query2);
-        $rc2 = $stmt2->bind_param(
-            'ss',
-
-            $room_status,
-            $room_id
-
-
-        );
-        $stmt1->execute();
-        $stmt2->execute();
-    };
+$res = json_decode($response);
+if ($res->status == 'success') {
+    $link = $res->data->link;
+    header('Location: ' . $link);
+} else {
+    $err =  'We can not process your payment';
 }
