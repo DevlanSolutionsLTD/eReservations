@@ -341,7 +341,7 @@ if (isset($_SESSION['err'])) {
                                                                         <!-- Hide This -->
                                                                         <input type="hidden" name="room_id" value="<?php echo $room->room_id; ?>">
                                                                         <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                                        <input type="submit" name="delete" value="Delete" class="text-center btn btn-danger">
+                                                                        <input type="submit" name="vacate" value="Vacate" class="text-center btn btn-danger">
                                                                     </div>
                                                                 </form>
                                                             </div>
