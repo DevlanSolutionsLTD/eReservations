@@ -99,8 +99,8 @@ if (isset($_GET['status'])) {
                 $payment_txn_code = $res->data->tx_ref;
                 $payment_amount = $amountPaid;
                 $payment_date_posted = $res->data->created_at;
-                $payment_reservation_id = $_GET['payment_reservation_id'];
-                $payment_room_id = $_GET['payment_room_id'];
+                $payment_reservation_id = $_GET['Reservation'];
+                $payment_room_id = $_GET['Room'];
 
                 /* Insert */
                 $sql = "INSERT INTO reservation_payments (payment_reservation_id, payment_room_id, payment_amount, payment_txn_code, payment_date_posted)
