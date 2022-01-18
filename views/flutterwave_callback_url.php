@@ -62,8 +62,7 @@
 if (isset($_GET['status'])) {
     //* check payment status
     if ($_GET['status'] == 'cancelled') {
-        // echo 'YOu cancel the payment';
-        header('Location: index.php');
+        header('Location: rooms');
     } elseif ($_GET['status'] == 'successful') {
         $txid = $_GET['transaction_id'];
 
@@ -92,14 +91,14 @@ if (isset($_GET['status'])) {
             $amountPaid = $res->data->charged_amount;
             $amountToPay = $res->data->meta->price;
             if ($amountPaid >= $amountToPay) {
-                echo 'Payment successful';
+                $success = "Payment successful";
 
                 //* Continue to give item to the user
             } else {
-                echo 'Fraud transactio detected';
+                $err = "We Are Having Problem Processing Your Payment";
             }
         } else {
-            echo 'Can not process payment';
+            $err = 'Can Not Process Payment, Please Use MPESA Payment Method';
         }
     }
 }
