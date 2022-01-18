@@ -23,8 +23,9 @@
                 <li class="nav-item dropdown">
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Reports</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                        <li><a href="#" class="dropdown-item">Reservations </a></li>
-                        <li><a href="#" class="dropdown-item">Payments</a></li>
+                        <li><a href="reports_reservations" class="dropdown-item">Reservations </a></li>
+                        <li><a href="reports_card_payments" class="dropdown-item">Card Payments</a></li>
+                        <li><a href="reports_mpesa_payments" class="dropdown-item">Mpesa Payments</a></li>
                     </ul>
                 </li>
             </ul>
