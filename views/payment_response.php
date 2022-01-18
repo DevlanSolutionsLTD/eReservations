@@ -101,6 +101,25 @@ if (isset($_GET['status'])) {
                 $payment_date_posted = $res->data->created_at;
                 $payment_reservation_id = $_GET['payment_reservation_id'];
                 $payment_room_id = $_GET['payment_room_id'];
+
+                /* Insert */
+                $sql = "INSERT INTO reservation_payments (payment_reservation_id, payment_room_id, payment_amount, payment_txn_code, payment_date_posted)
+                VALUES(?,?,?,?,?)";
+                $prepare = $mysqli->prepare($sql);
+                $bind = $prepare->bind_param(
+                    'sssss',
+                    $payment_reservation_id,
+                    $payment_room_id,
+                    $payment_amount,
+                    $payment_txn_code,
+                    $payment_date_posted
+                );
+                $prepare->execute();
+                if ($prepare) {
+                    echo   "Room Reserved";
+                } else {
+                    $err = "Failed To Persist Transaction Details";
+                }
             } else {
                 echo "We Are Having Problem Processing Your Payment";
             }
