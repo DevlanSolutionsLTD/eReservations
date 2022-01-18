@@ -79,7 +79,7 @@ if (isset($_GET['status'])) {
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => array(
                 "Content-Type: application/json",
-                "Authorization: Bearer FLWSECK_TEST-a90855faf858298f0b14bfb4621e53fe-X"
+                "Authorization: Bearer FLWSECK_TEST-a90855faf858298f0b14bfb4621e53fe-X"/* Do Not Hard Code This Bearer */
             ),
         ));
 
@@ -92,9 +92,6 @@ if (isset($_GET['status'])) {
             $amountPaid = $res->data->charged_amount;
             $amountToPay = $res->data->meta->price;
             if ($amountPaid >= $amountToPay) {
-                /* echo '<pre>';
-                echo $response;
-                echo '</pre>'; */
 
                 /* Insert This Payment Details To Payment*/
                 $payment_txn_code = $res->data->flw_ref;
@@ -103,10 +100,17 @@ if (isset($_GET['status'])) {
                 $payment_reservation_id = $_GET['Reservation'];
                 $payment_room_id = $_GET['Room'];
 
+                /* Update Room To Booked */
+                $room_status = "reserved";
+
                 /* Insert */
                 $sql = "INSERT INTO reservation_payments (payment_reservation_id, payment_room_id, payment_amount, payment_txn_code, payment_date_posted)
                 VALUES(?,?,?,?,?)";
+                $room_sql = "UPDATE rooms SET room_status =?, WHERE room_id = ?";
+
                 $prepare = $mysqli->prepare($sql);
+                $room_prepare = $mysqli->prepare($room_sql);
+
                 $bind = $prepare->bind_param(
                     'sssss',
                     $payment_reservation_id,
@@ -115,8 +119,16 @@ if (isset($_GET['status'])) {
                     $payment_txn_code,
                     $payment_date_posted
                 );
+                $room_bind = $room_prepare(
+                    'ss',
+                    $room_status,
+                    $payment_room_id
+                );
+
                 $prepare->execute();
-                if ($prepare) {
+                $room_prepare->execute();
+
+                if ($prepare && $room_prepare) {
                     echo   "Room Reserved";
                 } else {
                     $err = "Failed To Persist Transaction Details";

@@ -108,8 +108,6 @@ curl_close($curl);
 
 $res = json_decode($response);
 if ($res->status == 'success') {
-    /* Dirty Approach */
-
     $link = $res->data->link;
     header('Location: ' . $link);
 } else {
