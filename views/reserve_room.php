@@ -76,11 +76,7 @@ if (isset($_POST['reserve_room'])) {
     $duration = $_POST['duration'];
     $total_cost = $_POST['total_cost'];
 
-
-
-    /* Seperate MPESA & Bank Deposit Logic */
     if ($mode_of_payment == 'Mpesa') {
-
 
         $query = 'INSERT INTO reservations(reservation_id, reservation_room_id,client_name,client_id_no, client_email, client_phone, mode_of_payment,cost )
          VALUES (?,?,?,?,?,?,?,?)';
@@ -108,11 +104,11 @@ if (isset($_POST['reserve_room'])) {
         }
     } else if ($mode_of_payment == 'card') {
         /* Process Card Payment Here */
-        $query = 'INSERT INTO reservations(reservation_id, reservation_room_id,client_name,client_id_no, client_email, client_phone, mode_of_payment,cost )
-         VALUES (?,?,?,?,?,?,?,?)';
+        $query = 'INSERT INTO reservations(reservation_id, reservation_room_id,client_name,client_id_no, client_email, client_phone, mode_of_payment,cost,duration)
+         VALUES (?,?,?,?,?,?,?,?,?)';
         $stmt = $mysqli->prepare($query);
         $rc = $stmt->bind_param(
-            'ssssssss',
+            'sssssssss',
             $reservation_id,
             $reservation_room_id,
             $client_name,
@@ -120,7 +116,8 @@ if (isset($_POST['reserve_room'])) {
             $client_email,
             $client_phone,
             $mode_of_payment,
-            $total_cost
+            $total_cost,
+            $duration
 
         );
         $stmt->execute();
