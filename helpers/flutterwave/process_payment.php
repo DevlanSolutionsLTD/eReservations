@@ -69,6 +69,7 @@ $request = [
     'amount' => $total_cost,
     'currency' => 'KES',
     'payment_options' => 'card',
+    /* Update This URL To Match Your Needs */
     'redirect_url' => 'http://127.0.0.1/e_reservation/views/payment_response.php?Reservation=' . $Reservation . '&Room=' . $Room,
     'customer' => [
         'email' => $client_email,

@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Wed Jan 05 2022
+ * Created on Tue Jan 18 2022
  *
  *  Devlan - devlan.co.ke 
  *
@@ -58,9 +58,10 @@
  * IN NO EVENT WILL DEVLAN  LIABILITY FOR ANY CLAIM, WHETHER IN CONTRACT 
  * TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  */
-
-
+session_start();
 require_once('../partials/head.php');
+require_once('../config/codeGen.php');
+require_once('../config/config.php');
 ?>
 
 <body class="hold-transition layout-top-nav">
@@ -77,50 +78,65 @@ require_once('../partials/head.php');
                 <div class="container">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0 text-dark"> Reservations Checkout </h1>
+                            <h1 class="m-0 text-dark"> Rooms Reservations </h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Reservations Checkout</li>
+                                <li class="breadcrumb-item active">Reservations</li>
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>
+
             <!-- /.content-header -->
 
             <!-- Main content -->
             <div class="content">
                 <div class="container">
                     <div class="container-fluid">
-                        <!-- <div class="text-right">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add_modal">Add Reservations Checkout</button>
-                        </div> -->
-                        <div class="text-center">
-                            <h5>Select Payment Vendor</h5>
-                        </div>
-                        <hr>
                         <div class="row">
-                            <div class="d-flex justify-content-center">
-                                <div class="">
-                                    <div class="card-deck">
-                                        <div class="card">
-                                            <img class="card-img-top" src="../public/img/mpesa.png" alt="Card image cap">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Lipa Na Mpesa</h5>
-                                                <p class="card-text">Pay Reservation Bill Using Mpesa</p>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <img class="card-img-top" src="../public/img/equity.png" alt="Card image cap">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Equity Bank Credit Card</h5>
-                                                <p class="card-text">Pay Reservation Bill Using Equity Bank Credit Card</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-12">
+                                <table id="" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Room Number</th>
+                                            <th>Client Details</th>
+                                            <th>Payment Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $ret = "SELECT * FROM reservations r 
+                                        INNER JOIN rooms rm ON rm.room_id = r.reservation_room_id";
+                                        $stmt = $mysqli->prepare($ret);
+                                        $stmt->execute(); //ok
+                                        $res = $stmt->get_result();
+                                        while ($reservations = $res->fetch_object()) {
+                                        ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $reservations->room_number; ?>
+                                                </td>
+                                                <td>
+                                                    Name: <?php echo $reservations->client_name; ?> <br>
+                                                    Email: <?php echo $reservations->client_email; ?> <br>
+                                                    Phone No : <?php echo $reservations->client_phone; ?> <br>
+                                                    ID No: <?php echo $reservations->client_id_no; ?> <br>
+                                                </td>
+                                                <td>
+                                                    Amount: Ksh <?php echo $reservations->cost; ?><br>
+                                                    Method: <?php echo $reservations->mode_of_payment; ?><br>
+                                                    TXN ID :<?php echo $reservations->transaction_id; ?>
+                                                </td>
+                                                <td>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

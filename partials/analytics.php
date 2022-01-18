@@ -47,3 +47,10 @@ $stmt->bind_result($reservation);
 $stmt->fetch();
 $stmt->close();
 
+/* Income */
+$query = "SELECT SUM(cost)  FROM `reservations` WHERE transaction_id !='' ";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($incomes);
+$stmt->fetch();
+$stmt->close();
