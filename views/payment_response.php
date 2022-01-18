@@ -92,9 +92,10 @@ if (isset($_GET['status'])) {
             $amountPaid = $res->data->charged_amount;
             $amountToPay = $res->data->meta->price;
             if ($amountPaid >= $amountToPay) {
-                echo '<pre>';
+                /* echo '<pre>';
                 echo $response;
-                echo '</pre>';
+                echo '</pre>'; */
+
                 /* Insert This Payment Details To Payment*/
                 $payment_txn_code = $res->data->tx_ref;
                 $payment_amount = $amountPaid;

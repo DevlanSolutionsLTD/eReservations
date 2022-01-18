@@ -59,6 +59,9 @@
  * TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  */
 
+/* Global Variables */
+$Reservation = $reservation_id;
+$Room = $reservation_room_id;
 
 //* Prepare our rave request
 $request = [
@@ -66,7 +69,7 @@ $request = [
     'amount' => $total_cost,
     'currency' => 'KES',
     'payment_options' => 'card',
-    'redirect_url' => 'http://127.0.0.1/e_reservation/views/payment_response.php',
+    'redirect_url' => 'http://127.0.0.1/e_reservation/views/payment_response.php?Reservation=' . $Reservation . '&Room=' . $Room,
     'customer' => [
         'email' => $client_email,
         'name' => $client_name,
@@ -106,8 +109,9 @@ curl_close($curl);
 $res = json_decode($response);
 if ($res->status == 'success') {
     /* Dirty Approach */
+
     $link = $res->data->link;
-    header('Location: ' . $link . '&Reservation=' . $reservation_id . '&Room=' . $reservation_room_id);
+    header('Location: ' . $link);
 } else {
     $err =  'We can not process your payment';
 }
