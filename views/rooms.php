@@ -125,6 +125,19 @@ if (isset($_POST['delete'])) {
     }
 }
 
+/* Vacate Room */
+if (isset($_POST['vacate'])) {
+    $room_id = $_POST['room_id'];
+
+    $sql = "UPDATE rooms SET room_status = 'vacant' WHERE room_id = '$room_id'";
+    $prepare  = $mysqli->prepare($sql);
+    $prepare->execute();
+    if ($prepare) {
+        $success = "Room Status Updated";
+    } else {
+        $err = "Fail!, Please Try Again";
+    }
+}
 
 /* Credit Card Payments Processor Alerts Via Session Variable */
 if (isset($_SESSION['success'])) {
