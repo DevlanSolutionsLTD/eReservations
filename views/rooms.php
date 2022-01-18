@@ -127,12 +127,14 @@ if (isset($_POST['delete'])) {
 
 
 /* Credit Card Payments Processor Alerts Via Session Variable */
-if ($_SESSION['success']) {
+if (isset($_SESSION['success'])) {
     echo $_SESSION['success'];
     unset($_SESSION['success']);
-} else {
-    echo $_SESSION['success'];
-    unset($_SESSION['success']);
+}
+
+if (isset($_SESSION['err'])) {
+    echo $_SESSION['err'];
+    unset($_SESSION['err']);
 }
 ?>
 

@@ -58,6 +58,7 @@
  * IN NO EVENT WILL DEVLAN  LIABILITY FOR ANY CLAIM, WHETHER IN CONTRACT 
  * TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  */
+session_start();
 include('../config/config.php');
 
 if (isset($_GET['status'])) {
@@ -140,17 +141,21 @@ if (isset($_GET['status'])) {
                     /* Redirect To Rooms And Show Alert */
                     $_SESSION['success'] = 'Room Reserved';
                     header('Location: rooms');
+                    exit;
                 } else {
                     $_SESSION['err'] = 'Failed To Persist Transaction Details';
                     header('Location: rooms');
+                    exit;
                 }
             } else {
                 $_SESSION['err'] = 'We Are Having Problem Processing Your Payment';
                 header('Location: rooms');
+                exit;
             }
         } else {
             $_SESSION['err'] = 'Can Not Process Payment, Please Use MPESA Payment Method';
             header('Location: rooms');
+            exit;
         }
     }
 }
