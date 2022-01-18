@@ -99,7 +99,7 @@ require_once('../config/config.php');
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-12">
-                                <table class="table table-bordered table-hover">
+                                <table id="export-data-table" class="table-bordered table-hover">
                                     <thead>
                                         <tr>
                                             <th>Room Number</th>
